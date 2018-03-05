@@ -1,6 +1,8 @@
 class GridCanvas {
   constructor(canvas, gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, isDrawable) {
     this.canvas = canvas;
+    this.gridWidth = gridWidth;
+    this.gridHeight = gridHeight;
     this.canvas.width = gridWidth * pixelWidth;
     this.canvas.height = gridHeight * pixelHeight;
     this.ctx = this.canvas.getContext("2d");
@@ -35,10 +37,16 @@ class GridCanvas {
     return imageData;
   }
   
-  display1DArrayAsImage(imageData) {
+  display1DArrayAsImage(reconstructedData) {
     var newDrawPos = []
-    for (var i = 0; i < imageData.length; i++) {
-      
+    for (var i = 0; i < reconstructedData.length; i++) {
+      if (reconstructedData[i] > 0.5) {
+        newDrawPos.push({
+          x : (i % this.gridWidth) * this.pixelWidth,
+          y : Math.floor(i / this.gridWidth) * this.pixelHeight,
+          color : "black"
+        });
+      }
     }
     
     this.drawPos = newDrawPos;

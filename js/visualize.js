@@ -1,23 +1,69 @@
+var gridWidth = 10;
+var gridHeight = 10;
+var pixelWidth = 32;
+var pixelHeight = 32;
+var pixelColor = "black";
+var rbm;
+
 $(document).ready(function() {
-  var trainingData = [[1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0]];
-  $("#trainingData").html(trainingData);
-
-  var rbm = new RBM({
-      input : trainingData,
-      n_visible : 16,
-      n_hidden : 16
+  let trainingDataCanvas = new GridCanvas(document.getElementById("trainingDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, true);
+  let testDataCanvas = new GridCanvas(document.getElementById("testDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, true);
+  let reconstructedDataCanvas = new GridCanvas(document.getElementById("reconstructedDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, false);
+  
+  var trainingResetButton = document.getElementById("trainingResetButton");
+  var addAndTrainButton = document.getElementById("addAndTrainButton");
+  var testResetButton = document.getElementById("testResetButton");
+  var reconstructButton = document.getElementById("reconstructButton");
+  
+  createRbm();
+  
+  trainingResetButton.addEventListener('click', function() {
+    trainingDataCanvas.clearAllPixels();
   });
-
-  rbm.set('log level', 0);
-
-  rbm.train({
-      lr : 0.6,
-      k : 1,
-      epochs : 1
+  
+  addAndTrainButton.addEventListener('click', function() {
+    var trainingData = [];
+    trainingData.push(trainingDataCanvas.getImageAs1DArray());
+    rbm = trainData(rbm, trainingData);
+    
+    var reconstructedData = reconstructData(rbm, trainingData);
+    reconstructedDataCanvas.display1DArrayAsImage(probToBinaryMat(reconstructedData)[0]);
+    trainingDataCanvas.clearAllPixels();
   });
+  
+  testResetButton.addEventListener('click', function() {
+    testDataCanvas.clearAllPixels();
+  });
+  
+  reconstructButton.addEventListener('click', function() {
+    var trainingData = [];
+    trainingData.push(testDataCanvas.getImageAs1DArray());
+    
+    var reconstructedData = reconstructData(rbm, trainingData);
+    reconstructedDataCanvas.display1DArrayAsImage(probToBinaryMat(reconstructedData)[0]);
+  });
+  
+  function createRbm() {
+    rbm = new RBM({
+      n_visible : gridWidth * gridHeight,
+      n_hidden : 10
+    });
+    
+    rbm.set('log level', 0);
+  }
+  
+  function trainData(rbm, trainingData) {
+    rbm.train({
+      lr: 0.6,
+      k: 1,
+      epochs: 1,
+      input: trainingData
+    });
 
-  var testData = [[1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0]];
-  $("#testData").html(testData);
-  $("#result").html(rbm.reconstruct(testData));
-  $("#hLayerProbs").html(rbm.sampleHgivenV(testData)[0]);
+    return rbm
+  }
+
+  function reconstructData(trainedRbm, testData) {
+    return trainedRbm.reconstruct(testData);
+  }
 });

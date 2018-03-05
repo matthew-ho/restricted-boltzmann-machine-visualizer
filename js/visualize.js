@@ -14,6 +14,8 @@ $(document).ready(function() {
   var addAndTrainButton = document.getElementById("addAndTrainButton");
   var testResetButton = document.getElementById("testResetButton");
   var reconstructButton = document.getElementById("reconstructButton");
+  var startDaydreamButton = document.getElementById("startDaydreamButton");
+  var stopDaydreamButton = document.getElementById("stopDaydreamButton");
   
   createRbm();
   
@@ -41,6 +43,23 @@ $(document).ready(function() {
     
     var reconstructedData = reconstructData(rbm, trainingData);
     reconstructedDataCanvas.display1DArrayAsImage(probToBinaryMat(reconstructedData)[0]);
+  });
+  
+  startDaydreamButton.addEventListener('click', function() {
+    if (reconstructedDataCanvas.daydream === 0) {
+      reconstructedDataCanvas.daydream = setInterval(function() {
+        var trainingData = [];
+        trainingData.push(testDataCanvas.getImageAs1DArray());
+        
+        var reconstructedData = reconstructData(rbm, trainingData);
+        reconstructedDataCanvas.display1DArrayAsImage(probToBinaryMat(reconstructedData)[0]);
+      }, 1000);
+    }
+  });
+  
+  stopDaydreamButton.addEventListener('click', function() {
+    clearInterval(reconstructedDataCanvas.daydream);
+    reconstructedDataCanvas.daydream = 0;
   });
   
   function createRbm() {

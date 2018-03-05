@@ -12,7 +12,7 @@ class GridCanvas {
     this.pixelColor = pixelColor;
     
     this.mouse = {};
-    this.mark;
+    this.mark = 0;
     
     this.drawPos = [];
     
@@ -24,6 +24,8 @@ class GridCanvas {
       document.body.addEventListener("mouseup", this.stopDrawing.bind(this));
       this.canvas.addEventListener("contextmenu", this.clearPixel.bind(this));
     }
+    
+    this.daydream = 0;
   }
   
   getImageAs1DArray() {

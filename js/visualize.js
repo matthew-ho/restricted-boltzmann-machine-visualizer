@@ -5,7 +5,7 @@ var pixelHeight = 32;
 var pixelColor = "black";
 var rbm;
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
   let trainingDataCanvas = new GridCanvas(document.getElementById("trainingDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, true);
   let testDataCanvas = new GridCanvas(document.getElementById("testDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, true);
   let reconstructedDataCanvas = new GridCanvas(document.getElementById("reconstructedDataCanvas"), gridWidth, gridHeight, pixelWidth, pixelHeight, pixelColor, false);

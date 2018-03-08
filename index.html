@@ -8,6 +8,13 @@
 </head>
 <body>
   <h1 class="text-center">RBM Visualizer</h1>
+  <p>
+    Pick an object and draw it in the training data grid below.<br>
+    Add and train will train the RBM with the image you have drawn, doing one update of the weights after one reconstruction.<br>
+    After adding and training more images of the same object, the reconstructions of the image will improve.<br>
+    Reconstructing an image without training the RBM on it can be done using the test data grid.<br>
+    Start daydreaming will display multiple reconstructions of the test data grid image.
+  </p>
 
   <div class="row">
     <div class="col-xs-4 text-center">
@@ -35,9 +42,15 @@
       </canvas>
     </div>
   </div>
-  
-  <h2>Pre-trained on MNIST digit dataset</h2>
-  
+
+  <h2>Pre-trained RBM on MNIST digit dataset</h2>
+
+  <p>
+    Training manually using one image at a time takes a long time, so here is
+    a pre-trained RBM on the MNIST handwritten digit dataset.<br>
+    Draw a digit in the test data grid and start the daydream to see reconstructions of the digit by the RBM.
+  </p>
+
   <div class="row">
     <div class="col-xs-4 text-center">
       <h3>Test Data</h3>

@@ -10,36 +10,58 @@
   <h1 class="text-center">RBM Visualizer</h1>
 
   <div class="row">
-      <div class="col-xs-4 text-center">
-        <h3>Training Data</h3>
-        <canvas id="trainingDataCanvas">
-          Canvas tag not supported
-        </canvas>
-        <button id="trainingResetButton">Reset</button>
-        <button id="addAndTrainButton">Add and Train</button>
-      </div>
-      <div class="col-xs-4 text-center">
-        <h3>Test Data</h3>
-        <canvas id="testDataCanvas">
-          Canvas tag not supported
-        </canvas>
-        <button id="testResetButton">Reset</button>
-        <button id="reconstructButton">Reconstruct</button>
-        <button id="startDaydreamButton">Start Daydream</button>
-        <button id="stopDaydreamButton">Stop Daydream</button>
-      </div>
-      <div class="col-xs-4 text-center">
-        <h3>Reconstructed Data</h3>
-        <canvas id="reconstructedDataCanvas">
-          Canvas tag not supported
-        </canvas>
-      </div>
+    <div class="col-xs-4 text-center">
+      <h3>Training Data</h3>
+      <canvas id="trainingDataCanvas">
+        Canvas tag not supported
+      </canvas>
+      <button id="trainingResetButton">Reset</button>
+      <button id="addAndTrainButton">Add and Train</button>
     </div>
+    <div class="col-xs-4 text-center">
+      <h3>Test Data</h3>
+      <canvas id="testDataCanvas">
+        Canvas tag not supported
+      </canvas>
+      <button id="testResetButton">Reset</button>
+      <button id="reconstructButton">Reconstruct</button>
+      <button id="startDaydreamButton">Start Daydream</button>
+      <button id="stopDaydreamButton">Stop Daydream</button>
+    </div>
+    <div class="col-xs-4 text-center">
+      <h3>Reconstruction</h3>
+      <canvas id="reconstructedDataCanvas">
+        Canvas tag not supported
+      </canvas>
+    </div>
+  </div>
+  
+  <h2>Pre-trained on MNIST digit dataset</h2>
+  
+  <div class="row">
+    <div class="col-xs-4 text-center">
+      <h3>Test Data</h3>
+      <canvas id="mnistTestDataCanvas">
+        Canvas tag not supported
+      </canvas>
+      <button id="mnistTestResetButton">Reset</button>
+      <button id="mnistReconstructButton">Reconstruct</button>
+      <button id="mnistStartDaydreamButton">Start Daydream</button>
+      <button id="mnistStopDaydreamButton">Stop Daydream</button>
+    </div>
+    <div class="col-xs-4 text-center">
+      <h3>Reconstruction</h3>
+      <canvas id="mnistReconstructedDataCanvas">
+        Canvas tag not supported
+      </canvas>
+    </div>
+  </div>
 
   <!-- included js files-->
   <script src="js/math.js"></script>
   <script src="js/rbm.js"></script>
   <script src="js/gridCanvas.js"></script>
+  <script src="js/weights.js"></script>
   <script src="js/visualize.js"></script>
 </body>
 </html>

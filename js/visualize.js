@@ -9,8 +9,6 @@ var mnistGridWidth = 28;
 var mnistGridHeight = 28;
 var mnistPixelWidth = 12;
 var mnistPixelHeight = 12;
-//var mnistDataFilePath = "mnistdigittrainingdata/train-images.idx3-ubyte";
-var mnistDigitWeightsFilePath = "mnistdigittrainingdata/mnistDigitWeights3.json";
 var mnistDigitsRbm;
 
 document.addEventListener('DOMContentLoaded', function() {

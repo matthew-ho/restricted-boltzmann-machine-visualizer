@@ -6,16 +6,16 @@ class GridCanvas {
     this.canvas.width = gridWidth * pixelWidth;
     this.canvas.height = gridHeight * pixelHeight;
     this.ctx = this.canvas.getContext("2d");
-    
+
     this.pixelWidth = pixelWidth;
     this.pixelHeight = pixelHeight;
     this.pixelColor = pixelColor;
-    
+
     this.mouse = {};
     this.mark = 0;
-    
+
     this.drawPos = [];
-    
+
     window.requestAnimationFrame(this.render.bind(this));
 
     if (isDrawable) {
@@ -23,22 +23,26 @@ class GridCanvas {
       this.canvas.addEventListener("mousedown", this.startDrawing.bind(this));
       document.body.addEventListener("mouseup", this.stopDrawing.bind(this));
       this.canvas.addEventListener("contextmenu", this.clearPixel.bind(this));
+
+      this.canvas.addEventListener("touchmove", this.recordMouseMovement.bind(this));
+      this.canvas.addEventListener("touchstart", this.startDrawing.bind(this));
+      document.body.addEventListener("touchend", this.stopDrawing.bind(this));
     }
-    
+
     this.daydream = 0;
   }
-  
+
   getImageAs1DArray() {
     var numPixels = (this.canvas.width / this.pixelWidth) * (this.canvas.height / this.pixelHeight);
     var imageData = new Array(numPixels).fill(0);
-    
+
     for (var i = 0; i < this.drawPos.length; i++) {
       imageData[(this.drawPos[i].x / this.pixelWidth) + (this.drawPos[i].y / this.pixelHeight) * (this.canvas.width / this.pixelWidth)] = 1;
     }
-    
+
     return imageData;
   }
-  
+
   display1DArrayAsImage(reconstructedData) {
     var newDrawPos = []
     for (var i = 0; i < reconstructedData.length; i++) {
@@ -50,10 +54,10 @@ class GridCanvas {
         });
       }
     }
-    
+
     this.drawPos = newDrawPos;
   }
-  
+
   drawGrid() {
     this.ctx.beginPath();
     this.ctx.strokeStyle = "rgba(150, 150, 150, 0.75)";
@@ -86,7 +90,7 @@ class GridCanvas {
     this.drawImage(this.drawPos);
     window.requestAnimationFrame(this.render.bind(this));
   }
-  
+
   getMousePos(event) {
     var rect = this.canvas.getBoundingClientRect();
     return {
@@ -119,8 +123,8 @@ class GridCanvas {
 
   clearPixel(event) {
     event.preventDefault();
-    var savedPos = this.drawPos.filter((function(savedPos) { 
-      return !(savedPos.x == this.mouse.x && savedPos.y == this.mouse.y); 
+    var savedPos = this.drawPos.filter((function(savedPos) {
+      return !(savedPos.x == this.mouse.x && savedPos.y == this.mouse.y);
     }).bind(this));
     this.drawPos = savedPos;
     return false;

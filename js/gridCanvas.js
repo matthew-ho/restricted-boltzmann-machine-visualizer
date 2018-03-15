@@ -20,12 +20,12 @@ class GridCanvas {
 
     if (isDrawable) {
       this.canvas.addEventListener("mousemove", this.recordMouseMovement.bind(this));
-      this.canvas.addEventListener("mousedown", this.startDrawing.bind(this));
+      this.canvas.addEventListener("mousedown", this.startDrawingMouse.bind(this));
       document.body.addEventListener("mouseup", this.stopDrawing.bind(this));
       this.canvas.addEventListener("contextmenu", this.clearPixel.bind(this));
 
       this.canvas.addEventListener("touchmove", this.recordMouseMovement.bind(this));
-      this.canvas.addEventListener("touchstart", this.startDrawing.bind(this));
+      this.canvas.addEventListener("touchstart", this.startDrawingTouch.bind(this));
       document.body.addEventListener("touchend", this.stopDrawing.bind(this));
     }
 
@@ -93,27 +93,42 @@ class GridCanvas {
 
   getMousePos(event) {
     var rect = this.canvas.getBoundingClientRect();
-    return {
-      x: (Math.round((event.clientX - rect.left - (this.pixelWidth  / 2)) / this.pixelWidth)  * this.pixelWidth),
-      y: (Math.round((event.clientY - rect.top  - (this.pixelHeight / 2)) / this.pixelHeight) * this.pixelHeight)
-    };
+    if (event.changedTouches == undefined) {
+      return {
+        x: (Math.round((event.clientX - rect.left - (this.pixelWidth  / 2)) / this.pixelWidth)  * this.pixelWidth),
+        y: (Math.round((event.clientY - rect.top  - (this.pixelHeight / 2)) / this.pixelHeight) * this.pixelHeight)
+      };
+    } else {
+      return {
+        x: (Math.round((event.changedTouches[0].clientX - rect.left - (this.pixelWidth  / 2)) / this.pixelWidth)  * this.pixelWidth),
+        y: (Math.round((event.changedTouches[0].clientY - rect.top  - (this.pixelHeight / 2)) / this.pixelHeight) * this.pixelHeight)
+      };
+    }
   }
 
   recordMouseMovement(event) {
     this.mouse = this.getMousePos(event);
   }
 
-  startDrawing(event) {
+  startDrawingMouse(event) {
     if(event.button == 0) {
-      this.mark = setInterval((function() {
-        var pos = this.mouse;
-        if (this.drawPos.length > 1 && this.drawPos.slice(-1)[0].x == pos.x && this.drawPos.slice(-1)[0].y == pos.y) {
-        } else {
-          pos['color'] = this.pixelColor;
-          this.drawPos.push(pos);
-        }
-      }).bind(this), 10);
+      this.startDrawing(event)
     }
+  }
+
+  startDrawingTouch(event) {
+    this.startDrawing(event);
+  }
+
+  startDrawing(event) {
+    this.mark = setInterval((function() {
+      var pos = this.mouse;
+      if (this.drawPos.length > 1 && this.drawPos.slice(-1)[0].x == pos.x && this.drawPos.slice(-1)[0].y == pos.y) {
+      } else {
+        pos['color'] = this.pixelColor;
+        this.drawPos.push(pos);
+      }
+    }).bind(this), 10);
   }
 
   stopDrawing(event) {

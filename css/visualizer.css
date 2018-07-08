@@ -1,6 +1,7 @@
 body {
-    margin: 0;
-    padding: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -14,5 +15,22 @@ canvas {
   border: 10px;
   display: block;
   margin: 0 auto;
+  padding: 5px;
   touch-action: none;
+}
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+h2 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1em;
+  line-height: 1.7em;
 }
